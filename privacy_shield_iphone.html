@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#09090d">
+<meta name="description" content="Privacy Shield Pro — a private, local iPhone privacy dashboard.">
+<title>Privacy Shield Pro</title>
+<style>
+:root{color-scheme:dark;--bg:#09090d;--panel:#14141b;--panel2:#1b1b24;--line:#343440;--red:#ff3b50;--red2:#a9142b;--text:#f6f6f8;--muted:#a6a6b3;--green:#47d7a0;--amber:#ffca65}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at top,#241019 0%,var(--bg) 45%);color:var(--text);font:16px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;min-height:100vh;padding:env(safe-area-inset-top) 14px calc(28px + env(safe-area-inset-bottom))}
+main{max-width:760px;margin:auto}.top{display:flex;align-items:center;justify-content:space-between;padding:22px 4px 16px}.brand{display:flex;gap:11px;align-items:center}.logo{width:44px;height:44px;border:1px solid #873040;border-radius:14px;display:grid;place-items:center;background:#251018;color:var(--red);font-size:23px}.brand h1{font-size:17px;margin:0;letter-spacing:.08em}.brand small{color:var(--muted);font-size:11px;letter-spacing:.12em}.pill{font-size:11px;color:var(--green);border:1px solid #286c55;border-radius:99px;padding:6px 9px}
+nav{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;position:sticky;top:0;background:#09090df0;backdrop-filter:blur(14px);padding:8px 0;z-index:5}
+nav button{background:var(--panel);border:1px solid var(--line);border-radius:12px;color:var(--muted);padding:10px 3px;font-size:10px;min-height:55px}
+nav button span{display:block;font-size:17px;margin-bottom:4px}nav button.active{border-color:var(--red);color:white;background:#32131c}
+section{display:none;padding:12px 0 24px}section.active{display:block}.hero{background:linear-gradient(135deg,#251019,#15151d 65%);border:1px solid #713044;border-radius:22px;padding:21px;margin:12px 0 16px}.eyebrow{color:var(--red);font-size:11px;letter-spacing:.16em;font-weight:700}.hero h2{font-size:25px;margin:8px 0}.hero p,.muted{color:var(--muted);line-height:1.5;font-size:13px}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.card{background:var(--panel);border:1px solid var(--line);border-radius:17px;padding:15px;margin:10px 0}.stat{font-size:25px;font-weight:750;margin:7px 0}.label{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}.bar{height:9px;background:#30303a;border-radius:99px;overflow:hidden;margin:12px 0}.bar>i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--red2),var(--red));border-radius:99px;transition:width .25s}
+h3{font-size:17px;margin:10px 0}h4{font-size:14px;margin:0 0 6px}.item{display:flex;align-items:flex-start;gap:10px;padding:12px 0;border-bottom:1px solid #2c2c36}.item:last-child{border:0}.item input{width:19px;height:19px;accent-color:var(--red);margin-top:2px;flex:none}.item .copy{flex:1}.item p{margin:4px 0 0;color:var(--muted);font-size:12px;line-height:1.4}.tag{font-size:10px;border-radius:99px;padding:4px 7px;background:#292934;color:var(--muted);white-space:nowrap}.tag.good{color:var(--green);background:#12372d}.tag.warn{color:var(--amber);background:#3b2d15}
+button,.btn{cursor:pointer}button.primary,.btn{border:0;background:linear-gradient(100deg,#b81735,var(--red));color:white;border-radius:12px;padding:12px 15px;font-weight:700;font-size:13px}.btn.secondary{background:var(--panel2);border:1px solid var(--line);color:var(--text)}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+input[type=password],input[type=text]{width:100%;background:#0d0d13;border:1px solid var(--line);border-radius:12px;padding:13px;color:white;font-size:16px;margin:8px 0}input:focus{outline:2px solid #a92a43}
+.notice{border-left:3px solid var(--amber);padding:10px 12px;background:#292215;border-radius:8px;color:#f4d69b;font-size:12px;line-height:1.5;margin:12px 0}.alert{border-left:3px solid var(--red);padding:12px;background:#2b141b;border-radius:10px;margin:9px 0;font-size:13px}.alert.ok{border-color:var(--green);background:#10271f}.small{font-size:11px;color:var(--muted);line-height:1.5}.strength{font-weight:700;margin-top:8px}.hidden{display:none!important}footer{text-align:center;color:#777783;font-size:11px;padding:15px 0 28px}
+@media(min-width:600px){.grid{grid-template-columns:repeat(4,minmax(0,1fr))}.hero h2{font-size:30px}}
+</style>
+</head>
+<body>
+<main>
+<header class="top">
+ <div class="brand"><div class="logo">⛨</div><div><h1>PRIVACY SHIELD</h1><small>PRO // iPHONE EDITION</small></div></div>
+ <span class="pill">● LOCAL MODE</span>
+</header>
+<nav aria-label="Main navigation">
+ <button class="active" data-tab="dashboard"><span>▦</span>Home</button>
+ <button data-tab="permissions"><span>◈</span>Permissions</button>
+ <button data-tab="checklist"><span>☑</span>Checklist</button>
+ <button data-tab="password"><span>⌑</span>Password</button>
+ <button data-tab="alerts"><span>⚑</span>Alerts</button>
+</nav>
+
+<section id="dashboard" class="active">
+ <div class="hero"><div class="eyebrow">YOUR PRIVACY. YOUR CONTROL.</div><h2>Privacy command centre</h2><p>Review your iPhone privacy settings, track your security checklist and get practical recommendations. Your entries stay in this browser on this device.</p></div>
+ <div class="grid">
+  <div class="card"><div class="label">Checklist progress</div><div class="stat" id="progressNum">0%</div><div class="bar"><i id="progressBar"></i></div><div class="small" id="progressText">0 of 8 completed</div></div>
+  <div class="card"><div class="label">Permission reviews</div><div class="stat" id="permNum">0/5</div><div class="small">Categories reviewed</div></div>
+  <div class="card"><div class="label">Open recommendations</div><div class="stat" id="alertNum">0</div><div class="small">Items to look at</div></div>
+  <div class="card"><div class="label">Password checker</div><div class="stat">Local</div><div class="small">No password upload</div></div>
+ </div>
+ <div class="card"><h3>Recommended next steps</h3><div id="nextSteps" class="muted">Complete a privacy review to see recommendations.</div><div class="actions"><button class="primary" onclick="showTab('permissions')">Review permissions</button><button class="btn secondary" onclick="showTab('checklist')">Open checklist</button></div></div>
+ <p class="small">This is a guide and tracker, not an antivirus, VPN, firewall or system-wide iOS scanner. Safari does not grant websites access to all iPhone settings.</p>
+</section>
+
+<section id="permissions">
+ <div class="hero"><div class="eyebrow">MODULE 01</div><h2>Permission checker</h2><p>Open iOS Settings, review each category, then record whether you checked it. This page cannot read the actual permission state.</p></div>
+ <div class="notice">To review: open Settings → Privacy &amp; Security. Only allow access that an app genuinely needs. Choose “While Using” for location when appropriate.</div>
+ <div id="permissionList"></div>
+ <div class="actions"><button class="btn secondary" onclick="openSettingsHelp()">How to open Settings</button><button class="btn secondary" onclick="resetPermissions()">Reset review ticks</button></div>
+</section>
+
+<section id="checklist">
+ <div class="hero"><div class="eyebrow">MODULE 02</div><h2>Security checklist</h2><p>Tick each item after you have checked it on your iPhone. Your progress is saved locally in this browser.</p></div>
+ <div class="card"><div class="label">Completion</div><div class="stat" id="checkProgress">0 / 8</div><div class="bar"><i id="checkBar"></i></div><div id="checkItems"></div></div>
+</section>
+
+<section id="password">
+ <div class="hero"><div class="eyebrow">MODULE 03</div><h2>Password security</h2><p>Check a password on this device. The text is not transmitted or saved by this page.</p></div>
+ <div class="card">
+  <label for="passwordInput">Password to assess</label>
+  <input id="passwordInput" type="password" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Enter a password to check">
+  <label class="small"><input id="reveal" type="checkbox"> Show password while checking</label>
+  <div class="bar"><i id="strengthBar"></i></div><div class="strength" id="strengthLabel">Not checked</div><div class="small" id="strengthAdvice">Use a long, unique password or passphrase.</div>
+  <div class="actions"><button class="primary" id="checkPassword">Check locally</button><button class="btn secondary" id="clearPassword">Clear</button></div>
+ </div>
+ <div class="notice">Do not enter a password you are currently using for a sensitive account. For real accounts, use Apple Passwords or another trusted password manager to check weak, reused or compromised passwords.</div>
+</section>
+
+<section id="alerts">
+ <div class="hero"><div class="eyebrow">MODULE 04</div><h2>Privacy alerts</h2><p>Recommendations are based on the checklist and permission reviews you record here.</p></div>
+ <div id="alertList"></div>
+ <div class="actions"><button class="btn secondary" onclick="renderAll()">Refresh alerts</button><button class="btn secondary" onclick="showTab('checklist')">Review checklist</button></div>
+</section>
+<footer>PRIVACY SHIELD PRO · Version 1.0 · Runs locally in your browser<br>It does not send your entries to a server.</footer>
+</main>
+<script>
+const permissionData = [
+ ["Location Services","Settings → Privacy & Security → Location Services","Review which apps have location access. Prefer Never or While Using unless Always is essential."],
+ ["Camera","Settings → Privacy & Security → Camera","Remove access for apps that do not need to take photos or video."],
+ ["Microphone","Settings → Privacy & Security → Microphone","Review apps that can listen or record."],
+ ["Photos","Settings → Privacy & Security → Photos","Prefer Selected Photos access when an app does not need your entire library."],
+ ["Tracking","Settings → Privacy & Security → Tracking","Review app tracking requests and turn off permission for apps that do not need it."]
+];
+const checklistData = [
+ ["Update iOS","Settings → General → Software Update","Install available security updates."],
+ ["Stolen Device Protection","Settings → Face ID & Passcode → Stolen Device Protection","Review whether this feature is enabled and appropriate for you."],
+ ["Find My iPhone","Settings → [your name] → Find My → Find My iPhone","Check that Find My is configured if you want device-location and recovery features."],
+ ["Two-factor authentication","Settings → [your name] → Sign-In & Security","Review account sign-in security and trusted devices."],
+ ["Lock Screen previews","Settings → Notifications → Show Previews","Consider When Unlocked for sensitive notifications."],
+ ["Safari privacy","Settings → Apps → Safari (or Settings → Safari on some iOS versions)","Review tracking prevention and fraudulent website warnings."],
+ ["iCloud backups","Settings → [your name] → iCloud → iCloud Backup","Review whether backups are enabled and which apps use iCloud."],
+ ["Passcode and Face ID","Settings → Face ID & Passcode","Use a strong passcode and review enrolled Face ID settings."]
+];
+const defaultState = {permissions:{},checks:{}};
+let state = loadState();
+function loadState(){try{return {...defaultState,...JSON.parse(localStorage.getItem("psp_state")||"{}")}}catch(e){return {...defaultState}}}
+function save(){try{localStorage.setItem("psp_state",JSON.stringify(state))}catch(e){alert("Browser storage is unavailable. Your changes may not persist.")}renderAll()}
+function showTab(id){document.querySelectorAll("section").forEach(s=>s.classList.toggle("active",s.id===id));document.querySelectorAll("nav button").forEach(b=>b.classList.toggle("active",b.dataset.tab===id));window.scrollTo({top:0,behavior:"smooth"});if(id==="alerts")renderAlerts()}
+document.querySelectorAll("nav button").forEach(b=>b.addEventListener("click",()=>showTab(b.dataset.tab)));
+function renderPermissions(){
+ const root=document.getElementById("permissionList");root.innerHTML="";
+ permissionData.forEach(([name,path,desc],i)=>{
+  const checked=!!state.permissions[i],div=document.createElement("div");div.className="card";
+  div.innerHTML=`<div class="item"><input type="checkbox" id="perm${i}" ${checked?"checked":""}><div class="copy"><h4>${name}</h4><p>${desc}</p><p><b>Where:</b> ${path}</p></div><span class="tag ${checked?"good":"warn"}">${checked?"Reviewed":"Review"}</span></div>`;
+  div.querySelector("input").addEventListener("change",e=>{state.permissions[i]=e.target.checked;save()});root.appendChild(div);
+ });
+}
+function renderChecklist(){
+ const root=document.getElementById("checkItems");root.innerHTML="";
+ checklistData.forEach(([name,path,desc],i)=>{
+  const checked=!!state.checks[i],div=document.createElement("div");div.className="item";
+  div.innerHTML=`<input type="checkbox" id="check${i}" ${checked?"checked":""}><div class="copy"><h4>${name}</h4><p>${desc}</p><p><b>Where:</b> ${path}</p></div>`;
+  div.querySelector("input").addEventListener("change",e=>{state.checks[i]=e.target.checked;save()});root.appendChild(div);
+ });
+}
+function renderAlerts(){
+ const root=document.getElementById("alertList");root.innerHTML="";
+ const pending=checklistData.map((x,i)=>({title:x[0],desc:x[2],done:!!state.checks[i]})).filter(x=>!x.done);
+ const unreviewed=permissionData.map((x,i)=>({title:x[0],desc:"Review app access in iOS Settings.",done:!!state.permissions[i]})).filter(x=>!x.done);
+ [...pending.map(x=>({...x,kind:"Security checklist"})),...unreviewed.map(x=>({...x,kind:"Permission review"}))].forEach(a=>{
+  const d=document.createElement("div");d.className="alert";d.innerHTML=`<b>${a.kind}: ${a.title}</b><br><span class="small">${a.desc}</span>`;root.appendChild(d);
+ });
+ if(!root.children.length)root.innerHTML='<div class="alert ok"><b>All tracked items reviewed.</b><br>No outstanding items in this dashboard. This does not guarantee your iPhone is free of security risks.</div>';
+}
+function renderAll(){
+ renderPermissions();renderChecklist();renderAlerts();
+ const c=Object.values(state.checks).filter(Boolean).length,p=Object.values(state.permissions).filter(Boolean).length,total=checklistData.length;
+ const pct=Math.round(c/total*100),alerts=(total-c)+(permissionData.length-p);
+ document.getElementById("progressNum").textContent=pct+"%";document.getElementById("progressBar").style.width=pct+"%";document.getElementById("progressText").textContent=`${c} of ${total} completed`;
+ document.getElementById("permNum").textContent=`${p}/${permissionData.length}`;document.getElementById("alertNum").textContent=alerts;
+ document.getElementById("checkProgress").textContent=`${c} / ${total}`;document.getElementById("checkBar").style.width=pct+"%";
+ const next=document.getElementById("nextSteps");next.textContent=alerts?`${alerts} review item(s) remain. Open Privacy Alerts to see them.`:"You have completed all tracked reviews. Keep iOS and your apps updated.";
+}
+function resetPermissions(){if(confirm("Clear all permission review ticks?")){state.permissions={};save()}}
+function openSettingsHelp(){alert("Open the iPhone Settings app, then choose Privacy & Security. This website cannot open or inspect every iOS settings page directly.")}
+const pw=document.getElementById("passwordInput"),reveal=document.getElementById("reveal");
+reveal.addEventListener("change",()=>pw.type=reveal.checked?"text":"password");
+document.getElementById("clearPassword").addEventListener("click",()=>{pw.value="";document.getElementById("strengthBar").style.width="0";document.getElementById("strengthLabel").textContent="Not checked";document.getElementById("strengthAdvice").textContent="Use a long, unique password or passphrase."});
+document.getElementById("checkPassword").addEventListener("click",()=>{
+ const s=pw.value;let score=0,advice=[];
+ if(s.length>=15)score++;else advice.push("Aim for at least 15 characters.");
+ if(/[a-z]/.test(s)&&/[A-Z]/.test(s))score++;
+ if(/\d/.test(s))score++;
+ if(/[^A-Za-z0-9]/.test(s))score++;
+ if(!/(.)\1{2,}/.test(s))score++;else advice.push("Avoid repeated characters.");
+ const common=["password","123456","qwerty","letmein","welcome"];
+ if(common.some(x=>s.toLowerCase().includes(x))){score=0;advice.push("Avoid common password patterns.");}
+ const pct=s.length?Math.round(score/5*100):0;
+ document.getElementById("strengthBar").style.width=pct+"%";
+ document.getElementById("strengthLabel").textContent=!s?"Enter a password":score>=5?"Good structure":score>=3?"Could be stronger":"Weak structure";
+ document.getElementById("strengthAdvice").textContent=advice.join(" ")||"Use a unique password for every account. This simple check cannot detect breached or reused passwords.";
+});
+renderAll();
+</script>
+</body>
+</html>
